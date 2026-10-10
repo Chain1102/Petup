@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="th"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PetUp</title>
+<meta name="theme-color" content="#6a4dff"><link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/icon-192.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#f6f4ff;--card:#fff;--ink:#241f45;--mut:#7a7597;--line:#e6e2f5;--sun:#ffb020;--berry:#ff5c7a;--mint:#25b585;--vio:#6a4dff;--on:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151230;--card:#201b44;--ink:#f1eeff;--mut:#a39ec8;--line:#332d63}}
+:root[data-theme="dark"]{--bg:#151230;--card:#201b44;--ink:#f1eeff;--mut:#a39ec8;--line:#332d63}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%}body{background:var(--bg);color:var(--ink);font-family:'Prompt',system-ui,sans-serif;font-size:15px}
+.app{max-width:480px;margin:auto;padding:14px 16px 96px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.logo{font-weight:800;font-size:24px;letter-spacing:-.5px}.pill{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-weight:600}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;margin:12px 0}
+h3{margin:0 0 8px;font-size:17px}.mut{color:var(--mut);font-size:13px}
+.hero{text-align:center;padding:22px 16px}.pic{width:190px;height:190px;border-radius:50%;object-fit:cover;border:6px solid var(--sun);display:block;margin:0 auto 8px}
+.name{font-size:26px;font-weight:800}.say{background:var(--bg);border-radius:16px;padding:10px 14px;margin:10px auto 0;display:inline-block}
+.st{display:grid;grid-template-columns:54px 1fr 32px;gap:8px;align-items:center;margin:7px 0;text-align:left}.st i{height:9px;background:var(--line);border-radius:9px;overflow:hidden}.st b{display:block;height:100%;background:var(--mint)}.st em{font-style:normal;font-size:12px;color:var(--mut)}
+.st.x b{background:var(--vio)}.st.h b{background:var(--berry)}
+button{font:inherit;font-weight:600;border:0;border-radius:14px;padding:12px 16px;background:var(--ink);color:var(--bg);cursor:pointer}
+button:focus-visible,input:focus-visible,nav a:focus-visible{outline:3px solid var(--vio);outline-offset:2px}
+button.p{background:var(--vio);color:var(--on);width:100%}button.g{background:var(--line);color:var(--ink)}button:disabled{opacity:.45;cursor:not-allowed}
+input,textarea,select{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px}
+.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}.row>.f0{flex:0}
+.it{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);gap:8px}.it:last-child{border:0}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav div{max-width:480px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr)}nav a{padding:10px 4px;text-align:center;color:var(--mut);font-size:12px;cursor:pointer;font-weight:600}nav a.on{color:var(--vio)}nav span{display:block;font-size:20px}
+#ov{position:fixed;inset:0;z-index:9;display:none;background:var(--bg);overflow:auto;padding:calc(20px + env(safe-area-inset-top,0px)) 20px 20px}#ov.show{display:block}
+.ring{max-width:420px;margin:auto;text-align:center}.big{font-size:54px;font-weight:800;margin:6px 0}
+#toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:99px;z-index:12;display:none;max-width:90%;text-align:center}
+.warn{background:#fff3d6;color:#6b4a00;border-radius:14px;padding:10px 12px;font-size:13px}
+.shake{animation:sh .5s infinite}@keyframes sh{25%{transform:rotate(-6deg)}75%{transform:rotate(6deg)}}@media(prefers-reduced-motion:reduce){.shake{animation:none}}
+.pw{position:relative;width:190px;margin:0 auto 8px}.pw .pic{margin:0 auto}.bd{position:absolute;right:2px;top:2px;font-size:34px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
+.m-sad .pic{filter:saturate(.55) brightness(.93)}.m-sleepy .pic{filter:brightness(.78) saturate(.8)}.m-joy .pic{animation:bn .9s ease-in-out infinite}@keyframes bn{50%{transform:translateY(-8px)}}@media(prefers-reduced-motion:reduce){.m-joy .pic{animation:none}}
+
+.card{box-shadow:0 6px 20px rgba(60,40,140,.08);border-radius:24px}
+.hero{background:linear-gradient(160deg,rgba(106,77,255,.13),rgba(255,176,32,.16)),var(--card)}
+.pic{box-shadow:0 10px 26px rgba(0,0,0,.2)}
+button{transition:transform .12s,opacity .2s}button:active:not(:disabled){transform:scale(.96)}
+button.p{background:linear-gradient(135deg,var(--vio),#8b6dff);box-shadow:0 6px 14px rgba(106,77,255,.3)}
+.st b{transition:width .6s ease}.name{letter-spacing:-.3px}
+nav{backdrop-filter:blur(10px);border-radius:22px 22px 0 0}nav a{margin:4px;border-radius:14px;transition:background .2s}nav a.on{background:rgba(106,77,255,.14)}
+.pw{animation:br 4s ease-in-out infinite;transform-origin:50% 92%;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.pw:after{content:'';position:absolute;left:22%;right:22%;bottom:-7px;height:10px;border-radius:50%;background:rgba(0,0,0,.13);filter:blur(4px);z-index:-1}
+@keyframes br{50%{transform:scale(1.025,1.045)}}
+.pw .pic{animation:tl 9s ease-in-out infinite;transform-origin:50% 85%}
+@keyframes tl{0%,68%,100%{transform:none}74%{transform:rotate(-5deg)}82%{transform:rotate(4deg)}90%{transform:rotate(-2deg)}}
+.m-joy{animation:hop .7s ease-in-out infinite}.m-joy .pic{animation:wig .35s ease-in-out infinite}
+@keyframes hop{0%,100%{transform:translateY(0) scale(1.03,.96)}50%{transform:translateY(-14px) scale(.98,1.03)}}
+@keyframes wig{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+.m-sad{animation:br 6s ease-in-out infinite}.m-sad .pic{animation:dr 5s ease-in-out infinite}
+@keyframes dr{50%{transform:translateY(6px) rotate(-3deg)}}
+.m-sleepy{animation:br 7s ease-in-out infinite}.m-sleepy .pic{animation:nod 6s ease-in-out infinite}
+@keyframes nod{50%{transform:rotate(5deg) translateY(5px)}}
+.bd{animation:fl 2s ease-in-out infinite}@keyframes fl{50%{transform:translateY(-8px) scale(1.1)}}
+.m-sleepy .bd{animation:zz 3s ease-in infinite}@keyframes zz{0%{opacity:0;transform:translate(0,10px)}30%{opacity:1}100%{opacity:0;transform:translate(12px,-24px) scale(1.3)}}
+.m-sad .bd{animation:tr 2.4s ease-in infinite}@keyframes tr{0%{opacity:0;transform:translateY(-6px)}30%{opacity:1}100%{opacity:0;transform:translateY(20px)}}
+@media(prefers-reduced-motion:reduce){.pw,.pw .pic,.bd{animation:none!important}}
+.pic,.mini{overflow:hidden}.mini{width:96px;height:96px;border-radius:50%;display:block;margin:0 auto 4px}
+.m-sad .pic{filter:saturate(.8)}.m-sleepy .pic{filter:brightness(.92)}
+.eye{transform-box:fill-box;transform-origin:center;animation:bl 4.5s infinite}.m-sad .eye{animation-duration:6s}
+@keyframes bl{0%,89%,100%{transform:scaleY(1)}92%{transform:scaleY(.08)}95%{transform:scaleY(1)}97%{transform:scaleY(.08)}99%{transform:scaleY(1)}}
+.ear{transform-box:fill-box;transform-origin:50% 12%;animation:ef 7s infinite}.er{animation-delay:-3.2s}
+@keyframes ef{0%,86%,100%{transform:none}90%{transform:rotate(-7deg)}94%{transform:rotate(4deg)}}
+.tear{animation:td 2.4s ease-in infinite}@keyframes td{0%{opacity:0;transform:translateY(-4px)}30%{opacity:1}100%{opacity:0;transform:translateY(16px)}}
+@media(prefers-reduced-motion:reduce){.eye,.ear,.tear{animation:none!important}}
+.pic{border:0;border-radius:0;box-shadow:none;width:210px;height:210px;background:none;overflow:visible;filter:drop-shadow(0 8px 12px rgba(0,0,0,.16))}.pw{width:210px}.pw:after{display:none}
+.pw .pic,.m-joy .pic,.m-sad .pic,.m-sleepy .pic{animation:none}
+.hd{transform-box:fill-box;transform-origin:50% 92%;animation:tl 9s ease-in-out infinite}
+.m-joy .hd{animation:wig .35s ease-in-out infinite}.m-sad .hd{animation:dr 5s ease-in-out infinite}.m-sleepy .hd{animation:nod 6s ease-in-out infinite}
+.tail{transform-box:fill-box;transform-origin:0 100%;animation:wag 1.4s ease-in-out infinite}
+@keyframes wag{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(14deg)}}
+.m-joy .tail{animation-duration:.28s}.m-sleepy .tail{animation-duration:4s}
+.tail.ct{animation:sway 3.2s ease-in-out infinite}.m-joy .tail.ct{animation-duration:.8s}
+@keyframes sway{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(10deg)}}
+.m-sad .tail{animation:none;transform:rotate(24deg)}
+.yap{transform-box:fill-box;transform-origin:50% 0;animation:yp .24s 5}@keyframes yp{50%{transform:scaleY(.4)}}
+.bub{position:absolute;left:-14px;top:4px;background:var(--card);color:var(--ink);border:2px solid var(--line);border-radius:16px;padding:4px 12px;font-weight:800;font-size:15px;animation:pop .25s ease-out;box-shadow:0 4px 10px rgba(0,0,0,.12)}@keyframes pop{from{transform:scale(.3);opacity:0}}
+@media(prefers-reduced-motion:reduce){.hd,.tail,.yap,.bub{animation:none!important}}
+.sb .mini{width:68px;height:68px}.sb small{display:block;font-size:11px;color:var(--mut)}.wr{flex-wrap:wrap}.wr>*{flex:1 1 70px}
+.pic{width:178px;height:178px}.pw{width:178px}.row.act{align-items:stretch}.row.act .p{white-space:nowrap;padding:12px 6px;font-size:14px}
+</style></head><body>
+<div class="app"><header><div class="logo">🐾 PetUp</div><div class="pill" id="top"></div></header><div id="bn"></div><main id="main"></main></div>
+<nav><div id="nav"></div></nav><div id="ov" role="dialog" aria-live="assertive"></div><div id="toast" role="status"></div>
+<script>
+const K='petup_v2';
+const PHOTO={};
+const pic=(ty,m)=>PHOTO[ty];
+const BD={happy:'',joy:'💖',sad:'',sleepy:'💤'};
+const PAL={A:{dog:['#f2b36b','#d98e48','#fff6e6','#ffe9c7'],cat:['#ffc48a','#e8a063','#fff6ea','#ffe3d1']},
+B:{dog:['#f6dcb7','#d7ae7d','#fffaf0','#fde8d5'],cat:['#d9dde8','#a9afc2','#ffffff','#e3e8ff']},
+C:{dog:['#b9783f','#8a5328','#fff0dc','#f1e2cf'],cat:['#aab3c8','#7d869e','#f4f6fb','#e1e8f5']}};
+const HD={A:[120,116,84,70],B:[120,138,90,74],C:[120,112,76,64]},ER={A:15,B:7.5,C:13},EX={A:34,B:38,C:31},EY={A:10,B:2,C:6},NY={A:28,B:16,C:24};
+function petA(a,st,m,cls,alt){const[f,d,l,bg]=PAL[st][a],k='#2a2038',dog=a==='dog',[cx,cy,rx,ry]=HD[st],r=ER[st],ex=EX[st],ey=cy+EY[st],ny=cy+NY[st],iris=dog?'#9a5a1c':'#58c28f';
+const L=`stroke="${k}" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"`;
+const X=(sx,o)=>cx+sx*o;
+const eye=x=>{if(m==='joy')return`<path d="M${x-r} ${ey+3}Q${x} ${ey-r} ${x+r} ${ey+3}" ${L}/>`;
+ if(m==='sleepy')return`<path d="M${x-r} ${ey-2}Q${x} ${ey+r*.7} ${x+r} ${ey-2}" ${L}/>`;
+ const q=m==='sad'?r*1.12:r;return`<g class="eye"><circle cx="${x}" cy="${ey}" r="${q}" fill="${k}"/>${st==='C'?`<circle cx="${x}" cy="${ey}" r="${q*.74}" fill="${iris}"/><circle cx="${x}" cy="${ey}" r="${q*.4}" fill="${k}"/>`:''}<circle cx="${x+q*.3}" cy="${ey-q*.32}" r="${q*.36}" fill="#fff"/><circle cx="${x-q*.34}" cy="${ey+q*.3}" r="${q*.18}" fill="#fff" opacity=".9"/></g>`};
+let eyes=eye(cx-ex)+eye(cx+ex),extra='';
+if(m==='sad')extra=`<path d="M${cx-ex-r-3} ${ey-r-7}L${cx-ex+6} ${ey-r-3}M${cx+ex+r+3} ${ey-r-7}L${cx+ex-6} ${ey-r-3}" ${L}/><path class="tear" d="M${cx-ex-4} ${ey+r}q-7 11 0 15q7-4 0-15z" fill="#7cc7ff"/>`;
+const OP=`<path d="M${cx-14} ${ny+8}Q${cx} ${ny+36} ${cx+14} ${ny+8}Z" fill="#7a2638"/><path d="M${cx-7} ${ny+22}Q${cx} ${ny+30} ${cx+7} ${ny+22}Q${cx} ${ny+16} ${cx-7} ${ny+22}Z" fill="#ff7a93"/>`;const mouth=m==='joy'?OP
+:m==='sad'?`<path d="M${cx-10} ${ny+17}Q${cx} ${ny+7} ${cx+10} ${ny+17}" ${L}/>`
+:m==='sleepy'?`<ellipse cx="${cx}" cy="${ny+13}" rx="5" ry="4" fill="#7a2638"/>`
+:`<path d="M${cx-12} ${ny+8}Q${cx-6} ${ny+18} ${cx} ${ny+8}Q${cx+6} ${ny+18} ${cx+12} ${ny+8}" ${L}/>`;
+const nose=dog?`<ellipse cx="${cx}" cy="${ny}" rx="${st==='B'?6:st==='A'?8:9}" ry="${st==='B'?4.5:st==='A'?6:7}" fill="${k}"/><ellipse cx="${cx-2}" cy="${ny-2}" rx="2.5" ry="1.5" fill="#fff" opacity=".7"/>`
+:`<path d="M${cx-6} ${ny-3}H${cx+6}L${cx} ${ny+4}Z" fill="#ff8fa3" stroke="#ff8fa3" stroke-width="3" stroke-linejoin="round"/>`;
+const blush=[-1,1].map(s=>`<ellipse cx="${X(s,ex+24)}" cy="${ey+16}" rx="${st==='B'?14:st==='A'?12:10}" ry="${st==='C'?6:8}" fill="#ff7a93" opacity="${m==='joy'?.6:.4}"/>`).join('');
+const ears=[-1,1].map(s=>dog?(st==='B'?`<ellipse cx="${X(s,56)}" cy="${cy-62}" rx="16" ry="20" fill="${d}" transform="rotate(${s*20} ${X(s,56)} ${cy-62})"/>`
+:`<ellipse cx="${X(s,st==='A'?72:66)}" cy="${cy-2}" rx="${st==='A'?22:24}" ry="${st==='A'?38:40}" fill="${d}" transform="rotate(${s*15} ${X(s,70)} ${cy})"/>`)
+:`<path d="M${X(s,rx-4)} ${cy-14}L${X(s,rx*.62)} ${cy-ry-24}L${X(s,rx*.2)} ${cy-ry+6}Z" fill="${f}" stroke="${f}" stroke-width="12" stroke-linejoin="round"/><path d="M${X(s,rx*.8)} ${cy-26}L${X(s,rx*.62)} ${cy-ry-6}L${X(s,rx*.34)} ${cy-ry+4}Z" fill="#ffb6c1" stroke="#ffb6c1" stroke-width="5" stroke-linejoin="round"/>`).join('');
+const fluff=st==='C'?[-1,1].map(s=>`<path d="M${X(s,rx-2)} ${cy+4}L${X(s,rx+12)} ${cy+10}L${X(s,rx-4)} ${cy+18}L${X(s,rx+10)} ${cy+26}L${X(s,rx-8)} ${cy+32}Z" fill="${f}" stroke="${f}" stroke-width="4" stroke-linejoin="round"/>`).join(''):'';
+const mark=st==='B'?'':dog?`<path d="M${cx} ${cy-ry+4}Q${cx+10} ${cy-20} ${cx} ${cy}Q${cx-10} ${cy-20} ${cx} ${cy-ry+4}Z" fill="${l}"/>`:`<path d="M${cx} ${cy-ry+6}V${cy-ry+22}M${cx-13} ${cy-ry+9}L${cx-10} ${cy-ry+22}M${cx+13} ${cy-ry+9}L${cx+10} ${cy-ry+22}" stroke="${d}" stroke-width="4" stroke-linecap="round"/>`;
+const muz=st==='B'?'':`<ellipse cx="${cx}" cy="${cy+34}" rx="${st==='A'?28:26}" ry="18" fill="${l}"/>`;
+const wh=dog||st==='B'?'':`<path d="M${cx-rx-8} ${cy+22}L${cx-rx+22} ${cy+26}M${cx-rx-8} ${cy+36}L${cx-rx+22} ${cy+33}M${cx+rx+8} ${cy+22}L${cx+rx-22} ${cy+26}M${cx+rx+8} ${cy+36}L${cx+rx-22} ${cy+33}" stroke="${k}" stroke-width="2" opacity=".35"/>`;
+const T={A:dog?'M158 208Q196 206 192 176':'M158 210Q206 214 198 170Q194 154 182 158',B:dog?'M200 172Q220 164 214 146':'M204 176Q226 170 218 148',C:dog?'M164 208Q214 200 206 150':'M164 210Q222 212 212 156Q208 134 190 142'};
+const tail=`<g class="tail${dog?'':' ct'}"><path d="${T[st]}" stroke="${d}" stroke-width="${st==='C'&&dog?24:st==='C'?16:14}" stroke-linecap="round" fill="none"/></g>`;
+const body={A:`<ellipse cx="120" cy="208" rx="40" ry="30" fill="${f}"/><ellipse cx="120" cy="212" rx="22" ry="20" fill="${l}"/><ellipse cx="96" cy="212" rx="13" ry="10" fill="${l}"/><ellipse cx="144" cy="212" rx="13" ry="10" fill="${l}"/>`,
+B:`<ellipse cx="88" cy="214" rx="18" ry="11" fill="${d}"/><ellipse cx="152" cy="214" rx="18" ry="11" fill="${d}"/>`,
+C:`<ellipse cx="120" cy="204" rx="52" ry="44" fill="${f}"/><ellipse cx="120" cy="210" rx="30" ry="34" fill="${l}"/><ellipse cx="92" cy="228" rx="17" ry="10" fill="${l}"/><ellipse cx="148" cy="228" rx="17" ry="10" fill="${l}"/>`}[st];
+return`<svg class="${cls}" viewBox="0 0 240 240" ${alt?`role="img" aria-label="${alt}"`:'aria-hidden="true"'}><defs><clipPath id="cp"><circle cx="120" cy="120" r="112"/></clipPath></defs><circle cx="120" cy="120" r="112" fill="${bg}"/><g clip-path="url(#cp)">${tail}${body}<g class="hd">${ears}${fluff}<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="${f}"/>${mark}${muz}${blush}${nose}${wh}${eyes}${extra}${(Date.now()<talkUntil&&m!=='sleepy')?'<g class="yap">'+OP+'</g>':mouth}</g></g><circle cx="120" cy="120" r="109" fill="none" stroke="#ffb020" stroke-width="6"/></svg>`}
+const DV={
+D1:{n:'D1 · หูตั้งแก้มขาว',t:'หูตั้งใหญ่ แลบลิ้นยิ้ม',c:['#f0a24a','#d17f2c','#fff7ea','#ffe9c7'],h:[120,114,82,66],r:14,ex:34,ey:8,ny:26,tg:1,ir:0},
+D2:{n:'D2 · ยิ้มหวานหูแหลม',t:'แก้มครีม คิ้วจุดน่ารัก',c:['#e9a45b','#c97b35','#fff6e8','#fdebd2'],h:[120,116,80,64],r:11,ex:32,ey:8,ny:24,tg:0,ir:0},
+D3:{n:'D3 · ลูกหมาหูตก',t:'หูตกนุ่ม ตาโตมีม่านตา',c:['#f4c27a','#d89b4b','#fff5e0','#fff0d6'],h:[120,114,80,68],r:16,ex:33,ey:10,ny:30,tg:1,ir:1},
+D4:{n:'D4 · ขนฟูกลมเหมือนก้อนเมฆ',t:'ขนฟู ตาจุด หูเล็กจิ๋ว',c:['#ffb871','#f19544','#fff3e0','#ffe9d6'],h:[120,118,78,66],r:11,ex:32,ey:6,ny:24,tg:0,ir:0}};
+function dogV(id,m,cls,alt){const o=DV[id],[f,d,l,bg]=o.c,[cx,cy,rx,ry]=o.h,k='#2a2038',r=o.r,ex=o.ex,ey=cy+o.ey,ny=cy+o.ny,S=[-1,1],X=(s,q)=>cx+s*q;
+const L=`stroke="${k}" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"`;
+const eye=x=>{if(m==='joy')return`<path d="M${x-r} ${ey+3}Q${x} ${ey-r} ${x+r} ${ey+3}" ${L}/>`;
+ if(m==='sleepy')return`<path d="M${x-r} ${ey-2}Q${x} ${ey+r*.7} ${x+r} ${ey-2}" ${L}/>`;
+ const q=m==='sad'?r*1.12:r;return`<g class="eye"><circle cx="${x}" cy="${ey}" r="${q}" fill="${k}"/>${o.ir?`<circle cx="${x}" cy="${ey}" r="${q*.74}" fill="#7a4a1a"/><circle cx="${x}" cy="${ey}" r="${q*.4}" fill="${k}"/>`:''}<circle cx="${x+q*.3}" cy="${ey-q*.32}" r="${q*.36}" fill="#fff"/><circle cx="${x-q*.34}" cy="${ey+q*.3}" r="${q*.18}" fill="#fff" opacity=".9"/></g>`};
+const eyes=eye(cx-ex)+eye(cx+ex);
+const extra=m==='sad'?`<path d="M${cx-ex-r-3} ${ey-r-7}L${cx-ex+6} ${ey-r-3}M${cx+ex+r+3} ${ey-r-7}L${cx+ex-6} ${ey-r-3}" ${L}/><path class="tear" d="M${cx-ex-4} ${ey+r}q-7 11 0 15q7-4 0-15z" fill="#7cc7ff"/>`:'';
+const tongue=`<path d="M${cx-6} ${ny+14}Q${cx} ${ny+32} ${cx+6} ${ny+14}Z" fill="#ff7a93"/>`;
+const OP=`<path d="M${cx-14} ${ny+8}Q${cx} ${ny+36} ${cx+14} ${ny+8}Z" fill="#7a2638"/><path d="M${cx-7} ${ny+22}Q${cx} ${ny+30} ${cx+7} ${ny+22}Q${cx} ${ny+16} ${cx-7} ${ny+22}Z" fill="#ff7a93"/>`;const mouth=m==='joy'?OP
+:m==='sad'?`<path d="M${cx-10} ${ny+17}Q${cx} ${ny+7} ${cx+10} ${ny+17}" ${L}/>`
+:m==='sleepy'?`<ellipse cx="${cx}" cy="${ny+13}" rx="5" ry="4" fill="#7a2638"/>`
+:`<path d="M${cx-12} ${ny+8}Q${cx-6} ${ny+18} ${cx} ${ny+8}Q${cx+6} ${ny+18} ${cx+12} ${ny+8}" ${L}/>`+(o.tg?tongue:'');
+const nr=id==='D4'?7:id==='D3'?10:8.5;
+const nose=`<ellipse cx="${cx}" cy="${ny}" rx="${nr}" ry="${nr*.75}" fill="${k}"/><ellipse cx="${cx-2}" cy="${ny-2}" rx="2.6" ry="1.6" fill="#fff" opacity=".7"/>`;
+const blush=S.map(s=>`<ellipse cx="${X(s,ex+26)}" cy="${ey+16}" rx="11" ry="7" fill="#ff7a93" opacity="${m==='joy'?.6:.4}"/>`).join('');
+const cheeks=S.map(s=>`<ellipse cx="${X(s,40)}" cy="${cy+28}" rx="${id==='D2'?36:34}" ry="${id==='D2'?28:26}" fill="${l}"/>`).join('');
+const blaze=`<path d="M${cx} ${cy-ry+4}Q${cx+11} ${cy-20} ${cx} ${cy}Q${cx-11} ${cy-20} ${cx} ${cy-ry+4}Z" fill="${l}"/>`;
+const marks={D1:blaze+cheeks+`<ellipse cx="${cx}" cy="${cy+32}" rx="22" ry="18" fill="${l}"/>`,D2:cheeks+`<ellipse cx="${cx}" cy="${cy+30}" rx="24" ry="18" fill="${l}"/>`+S.map(s=>`<circle cx="${X(s,ex)}" cy="${ey-r-11}" r="5" fill="${l}"/>`).join(''),D3:`<ellipse cx="${cx}" cy="${cy+36}" rx="28" ry="20" fill="${l}"/>`,D4:`<ellipse cx="${cx}" cy="${cy+30}" rx="20" ry="14" fill="${l}"/>`}[id];
+const ears=S.map(s=>({D1:`<path d="M${X(s,rx-6)} ${cy-8}L${X(s,rx*.7)} ${cy-ry-46}L${X(s,rx*.15)} ${cy-ry+4}Z" fill="${f}" stroke="${f}" stroke-width="12" stroke-linejoin="round"/><path d="M${X(s,rx*.74)} ${cy-24}L${X(s,rx*.66)} ${cy-ry-24}L${X(s,rx*.34)} ${cy-ry+2}Z" fill="#ffb6c1" stroke="#ffb6c1" stroke-width="5" stroke-linejoin="round"/>`,
+D2:`<path d="M${X(s,rx-4)} ${cy-16}L${X(s,rx*.62)} ${cy-ry-22}L${X(s,rx*.18)} ${cy-ry+6}Z" fill="${d}" stroke="${d}" stroke-width="10" stroke-linejoin="round"/><path d="M${X(s,rx*.7)} ${cy-28}L${X(s,rx*.6)} ${cy-ry-6}L${X(s,rx*.34)} ${cy-ry+4}Z" fill="${l}" stroke="${l}" stroke-width="4" stroke-linejoin="round"/>`,
+D3:`<ellipse cx="${X(s,rx-4)}" cy="${cy+6}" rx="24" ry="44" fill="${d}" transform="rotate(${s*16} ${X(s,rx-4)} ${cy+6})"/>`,
+D4:`<circle cx="${X(s,50)}" cy="${cy-ry+2}" r="15" fill="${d}"/>`}[id])).join('');
+const fl=id==='D4'?Array.from({length:14},(_,i)=>{const a=i/14*6.283;return`<circle cx="${cx+rx*Math.cos(a)}" cy="${cy+ry*Math.sin(a)}" r="17" fill="${f}"/>`}).join(''):'';
+const T={D1:['M160 210Q184 206 182 190',16],D2:['M158 206Q204 214 196 170Q190 150 172 160',18],D3:['M160 208Q210 200 204 154',20],D4:['M160 206Q212 208 200 160Q196 148 184 156',26]}[id];
+const tail=`<g class="tail"><path d="${T[0]}" stroke="${d}" stroke-width="${T[1]}" stroke-linecap="round" fill="none"/></g>`;
+const bx={D1:[44,32],D2:[46,34],D3:[50,40],D4:[46,36]}[id];
+const body=`<ellipse cx="120" cy="206" rx="${bx[0]}" ry="${bx[1]}" fill="${f}"/><ellipse cx="120" cy="212" rx="${bx[0]*.55}" ry="${bx[1]*.8}" fill="${l}"/><ellipse cx="94" cy="228" rx="16" ry="10" fill="${l}"/><ellipse cx="146" cy="228" rx="16" ry="10" fill="${l}"/>`;
+return`<svg class="${cls}" viewBox="0 0 240 240" ${alt?`role="img" aria-label="${alt}"`:'aria-hidden="true"'}><defs><clipPath id="cp"><circle cx="120" cy="120" r="112"/></clipPath></defs><circle cx="120" cy="120" r="112" fill="${bg}"/><g clip-path="url(#cp)">${tail}${body}<g class="hd">${ears}${fl}<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="${f}"/>${marks}${blush}${nose}${eyes}${extra}${(Date.now()<talkUntil&&m!=='sleepy')?'<g class="yap">'+OP+'</g>':mouth}</g></g><circle cx="120" cy="120" r="109" fill="none" stroke="#ffb020" stroke-width="6"/></svg>`}
+const DEF={dog:'D3',cat:'A'},STN={A:'Chibi',B:'Mochi',C:'Fluffy',D1:'หูตั้ง',D2:'ยิ้มหวาน',D3:'หูตก',D4:'ขนฟู'};
+const face=(ty,m,cls='pic',alt='',st)=>{st=st||(S&&S.pet&&S.pet.type===ty&&S.pet.style);st=ty==='dog'?(DV[st]?st:DEF.dog):(PAL[st]?st:DEF.cat);return ty==='dog'?dogV(st,m,cls,alt):petA('cat',st,m,cls,alt)};
+const petImg=(ty,m,alt)=>`<div class="pw m-${m}">${face(ty,m,'pic',alt)}${BD[m]?`<span class="bd" aria-hidden="true">${BD[m]}</span>`:''}${Date.now()<talkUntil&&m!=='sleepy'?`<span class="bub" aria-hidden="true">${talkTxt}</span>`:''}</div>`;
+const IMG={get dog(){return pic('dog','happy')},get cat(){return pic('cat','happy')}};
+let joyUntil=0,lastMood='',due=[];
+const mood=()=>Date.now()<joyUntil?'joy':hunger()<25?'sad':energy()<30?'sleepy':'happy';
+
+const $=s=>document.querySelector(s),pad=n=>String(n).padStart(2,'0');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const dk=(d=new Date())=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const dn=k=>{const[a,b,c]=k.split('-').map(Number);return Math.round(Date.UTC(a,b-1,c)/864e5)};
+const ld=()=>{try{return JSON.parse(localStorage.getItem(K))}catch(e){return null}};
+let S=ld(),page='home',ring=null,ctx=null,tt,pend=null,editId=null,ansTxt='';
+const NATIVE=!!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform()),LN=NATIVE?Capacitor.Plugins.LocalNotifications:null,PA=NATIVE?(Capacitor.Plugins.PetUpAlarm||(Capacitor.registerPlugin&&Capacitor.registerPlugin('PetUpAlarm'))||null):null;let snT,nr=false,lastPoll=0,RD=null;
+const syncN=()=>{if(!LN||!S)return;clearTimeout(snT);snT=setTimeout(nativeSync,600)};
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){};syncN()};
+async function nativeSync(){try{const pe=await LN.getPending();if(pe.notifications.length)await LN.cancel({notifications:pe.notifications});
+ const n=[];if(PA)await PA.schedule({alarms:S.alarms.filter(a=>a.on).map((a,i)=>{const[h,m]=a.time.split(':').map(Number);return{id:1000+i,hour:h,minute:m,label:P().name+' เรียกให้ตื่น!'}})});else S.alarms.filter(a=>a.on).forEach((a,i)=>{const[h,m]=a.time.split(':').map(Number);n.push({id:1000+i,title:'⏰ '+P().name+' เรียกให้ตื่น!',body:'แตะเพื่อทำ Quest แล้วรับรางวัล',channelId:'alarm',schedule:{on:{hour:h,minute:m},allowWhileIdle:true},extra:{type:'alarm',time:a.time}})});
+ S.rem.filter(r=>!r.done&&r.at>Date.now()).sort((a,b)=>a.at-b.at).slice(0,50).forEach((r,i)=>{const rp=r.rep||0,at=new Date(r.at);n.push({id:2000+i,title:'🐾 '+P().name,body:r.text,channelId:'alarm',schedule:rp?{at,every:rp>864e5?'week':'day',allowWhileIdle:true}:{at,allowWhileIdle:true},extra:{type:'rem'}})});
+ if(n.length)await LN.schedule({notifications:n})}catch(e){}}
+const readyCard=()=>{if(!RD)return'';const rows=[['exact','⏰ ปลุกตรงเวลา (Alarms & reminders)'],['fullScreen','📲 เปิดหน้าจอปลุกอัตโนมัติ'],['notif','🔔 การแจ้งเตือน'],['battery','🔋 ไม่จำกัดแบตเตอรี่']],bad=rows.filter(r=>!RD[r[0]]);
+ return`<div class="${bad.length?'warn':'card'}" style="margin-bottom:10px"><b>${bad.length?'⚠️ ต้องตั้งค่าอีก '+bad.length+' อย่างก่อนปลุกจะเชื่อถือได้':'✅ พร้อมปลุกแม้ปิดแอปและจอดับ'}</b>${rows.map(r=>`<div class="it"><span>${RD[r[0]]?'✅':'❌'} ${r[1]}</span>${RD[r[0]]?'':`<button class="g" onclick="PA.fix({type:'${r[0]}'})">ตั้งค่า</button>`}</div>`).join('')}<button class="g" style="width:100%;margin-top:8px" onclick="testNative()">🔔 ทดสอบปลุกใน 10 วินาที (ล็อกจอรอได้เลย)</button></div>`};
+const refreshRD=()=>{PA&&PA.readiness().then(r=>{RD=r;if(page==='alarm'&&!ring)render()}).catch(()=>{})};
+function testNative(){PA.testIn({seconds:10,label:P().name+' ทดสอบปลุก'}).then(()=>toast('ตั้งทดสอบแล้ว ล็อกจอแล้วรอ 10 วินาที')).catch(e=>toast(String(e.message||e)))}
+function nativeStop(){if(PA&&nr){nr=false;PA.stop().catch(()=>{})}}
+async function nativePerm(){try{await LN.createChannel({id:'alarm',name:'ปลุกและเตือน',importance:5,visibility:1,vibration:true,lights:true})}catch(e){}
+ try{const r=await LN.requestPermissions();if(r.display==='granted'){const e=await LN.checkExactNotificationSetting();if(!PA&&e.exact_alarm==='denied')await LN.changeExactNotificationSetting()}}catch(e){}
+ if(PA)try{const r=await PA.readiness();RD=r;if(!r.exact)await PA.fix({type:'exact'})}catch(e){}}
+const log=k=>{S.log.push({t:Date.now(),k});if(S.log.length>600)S.log.shift()};
+const hrs=a=>(Date.now()-a)/36e5,P=()=>S.pet;
+const hunger=()=>Math.max(0,Math.round(P().h0-hrs(P().fedAt)*4));
+const energy=()=>Math.max(0,Math.round(100-hrs(P().wakeAt||P().fedAt)*5));
+const happy=()=>Math.min(100,Math.round(hunger()*.6+Math.min(S.streak,8)*5));
+const toast=m=>{const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(tt);tt=setTimeout(()=>t.style.display='none',3200)};
+function beep(f=880,d=.25){try{ctx=ctx||new(window.AudioContext||window.webkitAudioContext)();ctx.resume();const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.value=f;o.connect(g);g.connect(ctx.destination);g.gain.setValueAtTime(.3,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+d);o.start();o.stop(ctx.currentTime+d)}catch(e){}}
+document.addEventListener('click',()=>{try{ctx=ctx||new(window.AudioContext||window.webkitAudioContext)();ctx.resume()}catch(e){}},{once:true});
+function notify(t){try{if('Notification'in window&&Notification.permission==='granted')new Notification('PetUp 🐾',{body:t})}catch(e){}}
+/* ---- Thai time parser ---- */
+const TN={'หนึ่ง':1,'สอง':2,'สาม':3,'สี่':4,'ห้า':5,'หก':6,'เจ็ด':7,'แปด':8,'เก้า':9,'สิบเอ็ด':11,'สิบสอง':12,'สิบ':10};
+const NR='(\\d{1,2}|สิบเอ็ด|สิบสอง|สิบ|หนึ่ง|สอง|สาม|สี่|ห้า|หก|เจ็ด|แปด|เก้า)',R=s=>new RegExp(s);
+const num=x=>/\d/.test(x)?+x:TN[x];
+const WD={'อาทิตย์':0,'จันทร์':1,'อังคาร':2,'พุธ':3,'พฤหัส':4,'ศุกร์':5,'เสาร์':6},DW='อาทิตย์|จันทร์|อังคาร|พุธ|พฤหัส(?:บดี)?|ศุกร์|เสาร์';
+const TS=new RegExp('ทุก\\s*วัน(?:'+DW+')?|วัน(?:'+DW+')|วันนี้|พรุ่งนี้|มะรืนนี้|ตอน|\\d{1,2}[:.]\\d{2}|อีก\\s*(?:'+NR+'|ครึ่ง)\\s*(?:ชั่วโมง|นาที)?|บ่าย\\s*(?:โมง|'+NR+')(?:\\s*โมง)?|ตี\\s*'+NR+'|'+NR+'\\s*ทุ่ม|'+NR+'\\s*โมง(?:\\s*(?:เย็น|เช้า))?|เที่ยงคืน|เที่ยง|ครึ่ง','g');
+const clean=s=>{const x=s.replace(/^.*?เตือน(ให้)?/,'').replace(TS,' ').replace(/\s+/g,' ').trim();return x||s};
+function parseT(t){let h=null,m=0,x;
+ if(x=t.match(R('อีก\\s*'+NR+'\\s*(ชั่วโมง|นาที)')))return{at:Date.now()+num(x[1])*(x[2]==='นาที'?6e4:36e5),rep:0};
+ if(/อีกครึ่งชั่วโมง/.test(t))return{at:Date.now()+18e5,rep:0};
+ if(x=t.match(/(\d{1,2})[:.](\d{2})/)){h=+x[1];m=+x[2]}
+ else if(/เที่ยงคืน/.test(t))h=0;else if(/เที่ยง/.test(t))h=12;else if(/บ่ายโมง/.test(t))h=13;
+ else if(x=t.match(R('บ่าย\\s*'+NR)))h=num(x[1])+12;
+ else if(x=t.match(R('ตี\\s*'+NR)))h=num(x[1]);
+ else if(x=t.match(R(NR+'\\s*ทุ่ม')))h=num(x[1])+18;
+ else if(x=t.match(R(NR+'\\s*โมง\\s*เย็น')))h=num(x[1])+12;
+ else if(x=t.match(R(NR+'\\s*โมง'))){h=num(x[1]);if(h>=1&&h<=5&&!/เช้า/.test(t))h+=12}
+ if(h==null||h>23||m>59)return null;if(/ครึ่ง/.test(t)&&m===0)m=30;
+ const d=new Date();d.setHours(h,m,0,0);let rep=0;const wk=/พรุ่งนี้|มะรืน|วันนี้/.test(t)?undefined:Object.keys(WD).find(k=>t.includes(k));
+ if(wk!==undefined){while(d.getDay()!==WD[wk]||d<=new Date())d.setDate(d.getDate()+1);if(/ทุก/.test(t))rep=6048e5}
+ else{if(/มะรืน/.test(t))d.setDate(d.getDate()+2);else if(/พรุ่งนี้/.test(t))d.setDate(d.getDate()+1);else if(d<=new Date()&&!/วันนี้/.test(t))d.setDate(d.getDate()+1);if(/ทุกวัน/.test(t))rep=864e5}
+ return{at:d.getTime(),rep}}
+const fmt=ts=>{const d=new Date(ts),n=dn(dk())-dn(dk(d));return(n===0?'วันนี้':n===-1?'พรุ่งนี้':dk(d))+' '+pad(d.getHours())+':'+pad(d.getMinutes())};
+/* ---- game logic ---- */
+function lvl(){let up=0;while(P().exp>=100){P().exp-=100;P().level++;up=1}up&&setTimeout(()=>toast('🎉 '+P().name+' เลเวล '+P().level+' แล้ว!'),400)}
+function checkStreak(){if(!S.lastWake)return;const g=dn(dk())-dn(S.lastWake);if(g>=2&&S.streak>0){if(g===2&&S.freezes>0){S.freezes--;S.lastWake=dk(new Date(Date.now()-864e5));toast('🧊 ใช้ Streak Freeze รักษาสตรีคไว้ให้แล้ว')}else{S.streak=0;log('streak_lost')}save()}}
+function feed(force){const t=dk();if(S.feeds.d!==t)S.feeds={d:t,n:0};
+ if(!force&&S.feeds.n>=3){toast('วันนี้อิ่มแล้ว ไว้พรุ่งนี้นะ');return false}
+ if(!force&&hunger()>=90){toast(P().name+' ยังไม่หิว');return false}
+ const h=Math.min(100,hunger()+25);P().h0=h;P().fedAt=Date.now();joyUntil=Date.now()+8000;if(!force)S.feeds.n++;P().exp+=10;P().coins+=2;lvl();log('feed');save();render();return true}
+const DAYS=['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'],MON=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+const fmtL=ts=>{const d=new Date(ts);return `วัน${DAYS[d.getDay()]}ที่ ${d.getDate()} ${MON[d.getMonth()]} ${d.getFullYear()} เวลา ${pad(d.getHours())}:${pad(d.getMinutes())} น.`};
+function pv(){const d=$('#dt').value,m=$('#tm').value,e=$('#pv');e.textContent=d&&m?fmtL(new Date(d+'T'+m).getTime()):'เลือกวันและเวลา'}
+function addP(){const k=$('#tk').value.trim(),d=$('#dt').value,m=$('#tm').value;if(!k){toast('พิมพ์ก่อนว่าจะให้เตือนเรื่องอะไร');return}if(!d||!m){toast('เลือกวันและเวลาก่อนนะ');return}const at=new Date(d+'T'+m).getTime();if(at<=Date.now()){toast('เวลานี้ผ่านไปแล้ว เลือกใหม่นะ');return}addR(k,{at,rep:+$('#rp').value})}
+function addR(text,p){if(editId){S.rem=S.rem.filter(r=>r.id!==editId);editId=null}S.rem.push({id:Date.now(),text,at:p.at,rep:p.rep,done:false});log('reminder');save();toast('จำแล้ว: '+fmtL(p.at)+(p.rep?(p.rep>864e5?' (ทุกสัปดาห์)':' (ทุกวัน)'):''));render()}
+function qa(v){if(!/มีอะไร|ต้องทำอะไร|มีงาน/.test(v))return false;const o=/มะรืน/.test(v)?2:/พรุ่งนี้/.test(v)?1:0,k=dk(new Date(Date.now()+o*864e5)),w=['วันนี้','พรุ่งนี้','มะรืนนี้'][o];
+ const l=S.rem.filter(r=>!r.done&&dk(new Date(r.at))===k).sort((a,b)=>a.at-b.at);
+ ansTxt=l.length?`<h3>${w}มี ${l.length} อย่างนะ</h3>${l.map((r,i)=>`<div class="it"><span>${i+1}. ${esc(r.text)}</span><b>${fmt(r.at).slice(-5)}</b></div>`).join('')}<p class="mut">เดี๋ยว${esc(P().name)}ช่วยเตือนเองนะ ❤️</p>`:`<h3>${w}ยังว่างอยู่เลย</h3><p class="mut">อยากให้เตือนอะไร บอกได้เลย</p>`;return true}
+function parseAdd(){const v=$('#tx').value.trim();if(!v)return;ansTxt='';if(qa(v)){render();return}
+ const p=parseT(v);if(p&&p.at<=Date.now()){toast('เวลานี้ผ่านไปแล้ว ลองระบุเวลาใหม่นะ');return}
+ if(pend){if(!p){toast('ยังไม่เข้าใจเวลา ลอง “พรุ่งนี้ 8 โมง”');return}const x=pend;pend=null;addR(x,p);return}
+ if(!p){pend=clean(v);render();$('#tx').focus();return}addR(clean(v),p)}
+function edit(id){const r=S.rem.find(x=>x.id===id);if(!r)return;editId=id;pend=null;ansTxt='';render();const d=new Date(r.at);$('#tk').value=r.text;$('#dt').value=dk(d);$('#tm').value=pad(d.getHours())+':'+pad(d.getMinutes());$('#rp').value=String(r.rep||(r.daily?864e5:0));pv();$('#pk').scrollIntoView({behavior:'smooth'});$('#tk').focus()}
+/* ---- ringing & quest ---- */
+function startRing(label,test,quiet){if(ring)return;window.petup&&petup.wake&&petup.wake();ring={label,test,stage:'q',mode:('ontouchstart'in window&&window.DeviceMotionEvent)?'shake':'math',n:0,lm:0,lt:0,ok:0,t0:Date.now()};
+ if(!test)log('ring');newQ();const go=()=>{beep(880);setTimeout(()=>beep(1175),300);navigator.vibrate&&navigator.vibrate(300)};if(!quiet){go();ring.iv=setInterval(go,900);notify(P().name+' เรียกให้ตื่น!')}rOv()}
+const newQ=()=>{const a=2+Math.floor(Math.random()*8),b=3+Math.floor(Math.random()*8),c=Math.floor(Math.random()*20);ring.q={t:`${a} × ${b} + ${c}`,a:a*b+c}};
+function mot(e){const a=e.accelerationIncludingGravity;if(!a||!ring)return;const m=Math.hypot(a.x||0,a.y||0,a.z||0);if(m>18&&Date.now()-ring.lt>250){ring.n++;ring.lt=Date.now();const q=$('#qn');if(q)q.textContent=ring.n+' / 15';if(ring.n>=15)fin()}ring.lm=m}
+async function useShake(){try{if(DeviceMotionEvent.requestPermission&&await DeviceMotionEvent.requestPermission()!=='granted'){toast('ไม่ได้รับสิทธิ์เซ็นเซอร์ ใช้โจทย์เลขแทน');ring.mode='math';rOv();return}}catch(e){}window.addEventListener('devicemotion',mot);$('#sb').disabled=true}
+function ans(){const v=+$('#an').value;if(v===ring.q.a){ring.ok++;if(ring.ok>=3)return fin();newQ();rOv()}else{toast('ยังไม่ถูก ลองใหม่');$('#an').value=''}}
+function stopRing(){nativeStop();clearInterval(ring.iv);window.removeEventListener('devicemotion',mot)}
+function fin(skip){stopRing();let m;
+ if(skip){log('skip');m='ข้ามปลุกแล้ว (ไม่นับสตรีค)'}
+ else if(ring.test)m='ซ้อมสำเร็จ! (โหมดทดสอบ ไม่นับรางวัล)';
+ else{const first=S.lastWake!==dk();if(first){S.streak++;S.best=Math.max(S.best,S.streak);S.lastWake=dk();P().exp+=25;P().coins+=10;P().wakeAt=Date.now();lvl()}log('wake');feed(true);m=first?`ตื่นแล้ว! สตรีค ${S.streak} วัน 🔥  +25 EXP +10 🪙`:'ตื่นแล้ว วันนี้ได้สตรีคไปแล้วนะ'}
+ joyUntil=Date.now()+8000;ring.stage='done';ring.msg=m;save();rOv();render()}
+function rOv(){const o=$('#ov');ovState(!!ring);if(!ring){o.className='';o.innerHTML='';return}o.className='show';const p=P();let b;
+ if(ring.stage==='done')b=`<div class="big">🎉</div><h2>${esc(ring.msg)}</h2><p>${esc(p.name)} ได้กินข้าวเช้าแล้ว</p><button class="p" onclick="ring=null;rOv();render()">ไปต่อ</button>`;
+ else{const q=ring.mode==='shake'?`<div class="big shake" aria-hidden="true">📱</div><div class="big" id="qn">${ring.n} / 15</div><p class="mut">เขย่าโทรศัพท์ให้ครบ</p><button class="p" id="sb" onclick="useShake()">เปิดเซ็นเซอร์แล้วเขย่า</button><p><button class="g" onclick="ring.mode='math';rOv()">ทำโจทย์เลขแทน</button></p>`
+ :`<div class="big">${ring.q.t} = ?</div><p class="mut">ตอบให้ถูก 3 ข้อ (${ring.ok}/3)</p><input id="an" type="number" inputmode="numeric" autofocus onkeydown="event.key==='Enter'&&ans()"><p><button class="p" onclick="ans()">ตอบ</button></p>`;
+ b=`${petImg(p.type,ring.stage==='done'?'joy':'sleepy','')}<h2>${ring.test?'ทดสอบปลุก':esc(p.name)+' เรียกให้ตื่น!'}</h2><p class="mut">${esc(ring.label)} · ต้องทำ Quest ถึงจะหยุดเสียง</p>${q}<p class="mut" id="esc"></p>`}
+ o.innerHTML=`<div class="ring">${b}</div>`;if(ring.stage==='done'){o.tabIndex=-1;o.focus()}else{const f=o.querySelector('input,button');f&&f.focus()}}
+
+const ovState=on=>{['.app','nav'].forEach(q=>{const e=$(q);e&&(e.inert=on)});$('#ov').setAttribute('aria-modal',on?'true':'false')};
+function play(){const t=dk();if(S.play.d!==t)S.play={d:t,n:0};
+ if(S.play.n>=3){toast('วันนี้เล่นพอแล้ว ให้น้องพักนะ');return}
+ if(hunger()<25){toast(P().name+' หิวเกินกว่าจะเล่น ให้อาหารก่อนนะ');return}
+ if(energy()<15){toast(P().name+' เหนื่อยแล้ว ขอพักก่อน 😴');return}
+ S.play.n++;P().exp+=8;P().coins+=1;const h=hunger()-5;P().h0=Math.max(0,h);P().fedAt=Date.now();P().wakeAt-=2*36e5;joyUntil=Date.now()+6000;lvl();log('play');save();talkNow();render()}
+let talkUntil=0,talkTxt='',petAt=0;
+function talkNow(){const d=P().type==='dog',r=Math.random()*3|0;talkTxt=d?['โฮ่ง!','โฮ่ง โฮ่ง!','Woof!'][r]:['เมี๊ยว~','เมี้ยว!','Meow~'][r];talkUntil=Date.now()+1300;if(d){beep(320,.12);setTimeout(()=>beep(260,.15),140)}else{beep(650,.3);setTimeout(()=>beep(520,.25),180)}setTimeout(render,1350)}
+document.addEventListener('click',e=>{if(!e.target.closest('#main .pw')||!S||ring||Date.now()-petAt<1500)return;petAt=Date.now();joyUntil=Math.max(joyUntil,Date.now()+3500);navigator.vibrate&&navigator.vibrate(15);talkNow();render()});
+const missedCard=()=>S.missed.length?`<section class="card" style="border-color:var(--berry)"><h3>📌 พลาดไป ${S.missed.length} อย่าง</h3>${S.missed.map(m=>`<div class="it"><span>${esc(m.text)}</span><span class="mut">${fmt(m.at)}</span></div>`).join('')}<button class="g" style="width:100%" onclick="S.missed=[];save();render()">รับทราบ</button></section>`:'';
+const SD=['อา','จ','อ','พ','พฤ','ศ','ส'];
+const wk=()=>{let h='';for(let i=6;i>=0;i--){const d=new Date(Date.now()-i*864e5),k=dk(d),ok=S.log.some(x=>x.k==='wake'&&dk(new Date(x.t))===k);h+=`<div style="text-align:center"><div style="font-size:22px">${ok?'🔥':'⚪'}</div><div class="mut">${SD[d.getDay()]}</div></div>`}return`<div style="display:flex;justify-content:space-between;margin:10px 0"><span class="mut" style="align-self:center">7 วันล่าสุด</span>${h}</div>`};
+const look=()=>{const p=P(),ks=p.type==='dog'?Object.keys(DV):Object.keys(PAL),cur=ks.includes(p.style)?p.style:DEF[p.type];
+ return`<section class="card"><h3>🎨 หน้าตาของ ${esc(p.name)}</h3><div class="row wr">${ks.map(k=>`<button class="g sb" aria-pressed="${k===cur}" onclick="setLook('${k}')" style="padding:6px;${k===cur?'outline:3px solid var(--vio)':''}">${face(p.type,'happy','mini','',k)}<small>${STN[k]}</small></button>`).join('')}</div><div class="row" style="margin-top:10px"><button class="g" onclick="setType('dog')" ${p.type==='dog'?'disabled':''}>🐶 เปลี่ยนเป็นสุนัข</button><button class="g" onclick="setType('cat')" ${p.type==='cat'?'disabled':''}>🐱 เปลี่ยนเป็นแมว</button></div></section>`};
+function setLook(k){P().style=k;save();render()}
+function setType(t){if(P().type===t)return;P().type=t;P().style=DEF[t];save();render();toast('เปลี่ยนแล้ว 🐾')}
+/* ---- pages ---- */
+const bar=(l,v,c='')=>`<div class="st ${c}"><span>${l}</span><i><b style="width:${v}%"></b></i><em>${v}</em></div>`;
+function say(){const h=hunger(),m=mood();if(m==='joy')return'อิ่มแล้ว มีความสุขสุด ๆ ❤️';if(m==='sleepy'&&h>=25)return'ง่วงจัง... 😴';return h<25?'หิวแล้วนะ 🥺':S.streak>=3?'เรากับเธอสตรีค '+S.streak+' วันแล้ว ❤️':happy()>70?'วันนี้อารมณ์ดีสุด ๆ':'พร้อมช่วยดูแลวันของเธอแล้ว'}
+function home(){const p=P(),t=dk(),n=S.feeds.d===t?S.feeds.n:0,pn=S.play&&S.play.d===t?S.play.n:0;
+ const nx=S.alarms.filter(a=>a.on).map(a=>a.time).sort()[0],td=S.rem.filter(r=>!r.done&&dk(new Date(r.at))===t).sort((a,b)=>a.at-b.at);
+ return missedCard()+`<section class="card hero">${petImg(p.type,mood(),p.type==='dog'?'สุนัข':'แมว')}<div class="name">${esc(p.name)}</div><div class="mut">เลเวล ${p.level}</div>
+ <div class="say">${say()}</div><div style="margin-top:12px">${bar('หิว',hunger(),'h')}${bar('สุข',happy())}${bar('พลัง',energy())}${bar('EXP',p.exp,'x')}</div>
+ <div class="row act"><button class="p" onclick="feed()">🍖 ให้อาหาร (${n}/3)</button><button class="p" onclick="play()">🎾 เล่นด้วย (${pn}/3)</button></div><p class="mut" style="margin:10px 0 0">แตะที่ตัวน้องเพื่อลูบหัวได้ 🐾</p></section>
+ <section class="card"><h3>⏰ ปลุกถัดไป</h3><div>${nx||'<span class="mut">ยังไม่ได้ตั้งปลุก</span>'}</div><p class="mut">รางวัลตื่นเช้า (สตรีค +25 EXP) ได้จากการทำ Quest ตอนปลุกดังเท่านั้น</p></section>
+ <section class="card"><h3>🧠 วันนี้มี ${td.length} อย่าง</h3>${td.map(r=>`<div class="it"><span>${esc(r.text)}</span><span class="mut">${fmt(r.at).slice(-5)}</span></div>`).join('')||'<span class="mut">ว่างเลย ไปบอกเลขาได้นะ</span>'}</section>`}
+function alarm(){return`<section class="card"><h3>⏰ ตั้งปลุก</h3>${PA?readyCard():'<div class="warn">เวอร์ชันเว็บนี้ปลุกดังได้เมื่อเปิดหน้านี้ค้างไว้เท่านั้น แอปจริงต้องใช้ระบบปลุกของมือถือ (iOS AlarmKit / Android exact alarm)</div>'}
+ <div class="row" style="margin:10px 0"><input type="time" id="nt" value="07:00" aria-label="เวลาปลุก"><button class="f0" onclick="addA()">เพิ่ม</button></div>
+ ${S.alarms.map((a,i)=>`<div class="it"><b>${a.time}</b><label><input type="checkbox" style="width:auto" ${a.on?'checked':''} onchange="S.alarms[${i}].on=this.checked;save();askN()"> เปิด</label><button class="g" onclick="S.alarms.splice(${i},1);save();render()">ลบ</button></div>`).join('')||'<p class="mut">ยังไม่มีปลุก</p>'}
+ <p><button class="g" style="width:100%" onclick="toast('จะดังใน 10 วินาที');setTimeout(()=>startRing('ทดสอบ',true),10000)">ทดสอบปลุกใน 10 วินาที</button></p></section>`}
+function sec(){const l=S.rem.filter(r=>!r.done).sort((a,b)=>a.at-b.at),rp=r=>r.rep||(r.daily?864e5:0),n=new Date(Date.now()+36e5),dd=dk(n),tm=pad(n.getHours())+':00';
+ return`<section class="card"><h3>🧠 เลขาของ ${esc(P().name)}</h3>${pend?`<div class="warn">เตือน “${esc(pend)}” ตอนไหนดี? พิมพ์เวลา เช่น “พรุ่งนี้ 8 โมง” <button class="g" onclick="pend=null;render()">ยกเลิก</button></div>`:`<p class="mut">พิมพ์แบบที่พูดจริง เช่น “พรุ่งนี้ 9 โมงเตือนให้ส่งงาน”, “ทุกวันจันทร์ 7 โมงเตือนวิ่ง”, “อีก 30 นาทีเตือนพักสายตา” หรือถาม “พรุ่งนี้มีอะไรต้องทำบ้าง”</p>`}
+ <input id="tx" placeholder="บอกเลขาได้เลย" aria-label="พิมพ์ถึงเลขา" onkeydown="event.key==='Enter'&&parseAdd()"><p><button class="p" onclick="parseAdd()">จำให้เลย</button></p></section>${ansTxt?`<section class="card">${ansTxt}</section>`:''}
+ <section class="card" id="pk"><h3>📅 เลือกวันและเวลาเอง</h3>${editId?'<p class="mut">กำลังแก้ไขรายการ แก้แล้วกดบันทึก</p>':''}
+ <label class="mut" for="tk">เรื่องที่จะให้เตือน</label><input id="tk" placeholder="เช่น ส่งงาน" maxlength="80">
+ <div class="row" style="margin-top:8px"><div><label class="mut" for="dt">วันที่</label><input type="date" id="dt" value="${dd}" min="${dk()}" oninput="pv()"></div><div><label class="mut" for="tm">เวลา</label><input type="time" id="tm" value="${tm}" oninput="pv()"></div></div>
+ <label class="mut" for="rp">ความถี่</label><select id="rp"><option value="0">ครั้งเดียว</option><option value="86400000">ทุกวัน</option><option value="604800000">ทุกสัปดาห์</option></select>
+ <p id="pv" aria-live="polite" style="font-weight:600;margin:10px 0">${fmtL(new Date(dd+'T'+tm).getTime())}</p><button class="p" onclick="addP()">${editId?'บันทึกการแก้ไข':'ตั้งเตือน'}</button></section>
+ <section class="card"><h3>รายการที่จำไว้</h3>${l.map(r=>`<div class="it"><div>${esc(r.text)}<div class="mut">${fmtL(r.at)}${rp(r)?(rp(r)>864e5?' · ทุกสัปดาห์':' · ทุกวัน'):''}</div></div><div class="row f0"><button class="g" onclick="edit(${r.id})">แก้</button><button class="g" onclick="S.rem=S.rem.filter(x=>x.id!==${r.id});save();render()">ลบ</button></div></div>`).join('')||'<p class="mut">ยังไม่มีรายการ</p>'}</section>`}
+function stats(){const c=k=>S.log.filter(x=>x.k===k).length,r=c('ring'),w=c('wake'),days=new Set(S.log.map(x=>dk(new Date(x.t)))).size;
+ return`<section class="card"><h3>📊 สถิติของคุณ</h3><div class="it"><span>🔥 สตรีคตอนนี้ / สูงสุด</span><b>${S.streak} / ${S.best}</b></div><div class="it"><span>🪙 เหรียญ</span><b>${P().coins}</b></div><div class="it"><span>🧊 Streak Freeze</span><b>${S.freezes}/2</b></div>
+ <div class="it"><span>อัตราตื่นสำเร็จ (Wake Success)</span><b>${r?Math.round(w/r*100)+'%':'–'} (${w}/${r})</b></div><div class="it"><span>วันที่เปิดใช้งาน</span><b>${days}</b></div>
+ ${wk()}<p><button class="g" style="width:100%" ${P().coins<30||S.freezes>=2?'disabled':''} onclick="P().coins-=30;S.freezes++;save();render()">ซื้อ Streak Freeze (30 🪙)</button></p></section>
+ ${look()}<section class="card"><h3>💾 สำรองข้อมูล</h3><p class="mut">ข้อมูลเก็บในเบราว์เซอร์นี้ ล้างข้อมูลแล้วสัตว์เลี้ยงจะหาย ส่งออกเก็บไว้ได้</p><textarea id="bk" rows="3" aria-label="ข้อมูลสำรอง"></textarea>
+ <div class="row" style="margin-top:8px"><button class="g" onclick="$('#bk').value=JSON.stringify(S)">ส่งออก</button><button class="g" onclick="imp()">นำเข้า</button><button class="g" onclick="confirm('เริ่มใหม่ทั้งหมด?')&&(localStorage.removeItem(K),location.reload())">รีเซ็ต</button></div></section>`}
+function imp(){try{const o=JSON.parse($('#bk').value);if(!o.pet||!o.alarms)throw 0;S=o;save();render();toast('นำเข้าแล้ว')}catch(e){toast('ข้อมูลไม่ถูกต้อง')}}
+function addA(){const v=$('#nt').value;if(v){S.alarms.push({time:v,on:true});save();askN();render()}}
+function askN(){if(LN){nativePerm();return}try{'Notification'in window&&Notification.permission==='default'&&Notification.requestPermission()}catch(e){}}
+function setup(){let ty='dog',st=DEF.dog,nm='';const o=$('#ov');o.className='show';ovState(true);
+ const go=()=>{const n=$('#nm').value.trim();if(!n){toast('ตั้งชื่อก่อนนะ · Please name your pet');return}const t=Date.now();
+  S={pet:{type:ty,style:st,name:n,level:1,exp:0,coins:0,h0:70,fedAt:t,wakeAt:t},streak:0,best:0,lastWake:null,freezes:1,feeds:{d:'',n:0},alarms:[{time:'07:00',on:true}],rem:[],log:[],fired:{},missed:[],play:{d:'',n:0}};log('start');save();askN();ovState(false);o.className='';o.innerHTML='';render()};
+ const draw=()=>{const ks=ty==='dog'?Object.keys(DV):Object.keys(PAL),ab=(t,id,lb)=>`<button class="g" id="${id}" aria-pressed="${ty===t}" style="${ty===t?'outline:3px solid var(--vio)':''}">${face(t,'happy','mini','',ty===t?st:DEF[t])}${lb}</button>`;
+  o.innerHTML=`<div class="ring"><div class="big">🐾</div><h2>ยินดีต้อนรับสู่ PetUp<br><small class="mut">Welcome to PetUp</small></h2><p class="mut">เลือกเพื่อนของคุณ · Choose your companion</p><div class="row">${ab('dog','d','สุนัข · Dog')}${ab('cat','c','แมว · Cat')}</div><p class="mut">เลือกหน้าตา · Pick a look</p><div class="row wr">${ks.map(k=>`<button class="g sb" data-k="${k}" aria-pressed="${k===st}" style="padding:6px;${k===st?'outline:3px solid var(--vio)':''}">${face(ty,'happy','mini','',k)}<small>${STN[k]}</small></button>`).join('')}</div><p><input id="nm" placeholder="ตั้งชื่อ · Name (ไทย / English)" maxlength="16" autocomplete="off" aria-label="ชื่อสัตว์เลี้ยง Pet name"></p><button class="p" id="go">เริ่มเลย · Start</button></div>`;
+  $('#nm').value=nm;$('#nm').oninput=e=>{nm=e.target.value};
+  $('#d').onclick=()=>{ty='dog';st=DEF.dog;draw()};$('#c').onclick=()=>{ty='cat';st=DEF.cat;draw()};
+  o.querySelectorAll('.sb').forEach(b=>b.onclick=()=>{st=b.dataset.k;draw()});
+  $('#go').onclick=go;$('#nm').onkeydown=e=>{if(e.key==='Enter')go()}};
+ draw()}
+const TABS=[['home','🏠','หน้าหลัก'],['alarm','⏰','ปลุก'],['sec','🧠','เลขา'],['stats','📊','สถิติ']];
+function bnR(){const e=$('#bn');if(!e)return;e.innerHTML=ring?'':due.map(d=>`<div class="card" style="border-color:var(--sun)"><b>🐾 ${esc(P().name)}: ถึงเวลา “${esc(d.text)}” แล้ว</b><div class="row" style="margin-top:8px"><button class="g" onclick="snz('${d.k}',5)">อีก 5 นาที</button><button class="g" onclick="snz('${d.k}',10)">อีก 10 นาที</button><button class="g" onclick="snz('${d.k}',30)">อีก 30 นาที</button></div><p style="margin:8px 0 0"><button class="p" onclick="rdone('${d.k}')">เสร็จแล้ว</button></p></div>`).join('')}
+function snz(k,m){const d=due.find(x=>x.k===k);if(!d)return;due=due.filter(x=>x.k!==k);S.rem.push({id:Date.now(),text:d.text,at:Date.now()+m*6e4,rep:0,done:false});log('snooze');save();toast('เลื่อนไปอีก '+m+' นาที');render()}
+function rdone(k){due=due.filter(x=>x.k!==k);log('rem_done');render()}
+function render(){if(!S)return;bnR();if(ring)return;lastMood=mood();$('#top').textContent='🔥 '+S.streak+'  🪙 '+P().coins;
+ $('#nav').innerHTML=TABS.map(t=>`<a role="button" tabindex="0" class="${page===t[0]?'on':''}" onclick="page='${t[0]}';render()" onkeydown="event.key==='Enter'&&(page='${t[0]}',render())"><span>${t[1]}</span>${t[2]}</a>`).join('');
+ $('#main').innerHTML=({home,alarm,sec,stats})[page]()}
+function tick(){if(!S)return;if(PA&&!ring&&!nr&&Date.now()-lastPoll>1500){lastPoll=Date.now();PA.status().then(r=>{if(r.ringing&&!ring){nr=true;startRing('ปลุก '+(r.label||''),false,true)}}).catch(()=>{})}const n=new Date(),hm=pad(n.getHours())+':'+pad(n.getMinutes());checkStreak();for(const k in S.fired)if(!k.startsWith(dk()))delete S.fired[k];
+ if(!ring&&!PA)S.alarms.forEach(a=>{const key=dk()+a.time;if(a.on&&a.time===hm&&S.fired[key]!==1){S.fired[key]=1;save();startRing('ปลุก '+a.time,false)}});
+ S.rem.forEach(r=>{if(!r.done&&r.at<=Date.now()){if(Date.now()-r.at<6e5){due.push({k:Date.now()+'_'+r.id,text:r.text});window.petup&&petup.wake&&petup.wake();notify(r.text);beep(1000,.4);log('rem_fire')}else{S.missed.push({text:r.text,at:r.at});S.missed=S.missed.slice(-20)}const rp=r.rep||(r.daily?864e5:0);if(rp){while(r.at<=Date.now())r.at+=rp}else r.done=true;save();render()}});
+ if(ring&&ring.stage==='q'){const e=$('#esc');if(e&&Date.now()-ring.t0>9e4){e.innerHTML='<button class="g" onclick="fin(true)">ข้ามปลุก (ไม่นับสตรีค)</button>'}}
+ if(!ring&&mood()!==lastMood)render();else if(!ring&&page==='home'&&n.getSeconds()===0)render()}
+if(!S)setup();else{S.freezes??=1;S.fired??={};S.missed??=[];S.play??={d:'',n:0};checkStreak();log('open');render()}
+setInterval(tick,1000);
+if(LN){LN.addListener('localNotificationActionPerformed',e=>{const x=(e.notification&&e.notification.extra)||{};if(S&&x.type==='alarm')startRing('ปลุก '+(x.time||''),false)});if(S)nativePerm();syncN();refreshRD();document.addEventListener('visibilitychange',()=>{if(!document.hidden){lastPoll=0;refreshRD()}})}
+</script></body></html>
